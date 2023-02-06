@@ -1,6 +1,10 @@
 import Head from "next/head";
+import Image from "next/image";
+//import styles from "@/styles/Home.module.css";
+import { gql } from "@apollo/client";
+import client from "../apollo-client";
 
-export default function Home() {
+export default function Home({ monsters }: any /* @TODO: Fix types */) {
   return (
     <>
       <Head>
@@ -9,7 +13,71 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main></main>
+      <main>
+        <div>
+          {monsters.map((monster: any) => (
+            <div key={monster.name} style={{ marginBottom: 2 + "rem" }}>
+              <h3>{monster.name}</h3>
+              <br />
+              {monster.image && monster.image.length > 0 && (
+                <div
+                  style={{
+                    width: "300px",
+                    height: "200px",
+                    position: "relative",
+                  }}
+                >
+                  <Image
+                    src={`https://www.dnd5eapi.co${monster.image}`}
+                    alt={monster.name}
+                    fill={true}
+                  />
+                </div>
+              )}
+              <p>Type: {monster.type}</p>
+              <p>Size: {monster.size}</p>
+              <p>Hit points: {monster.hit_points}</p>
+              <br />
+              <ul>
+                <li>Strength: {monster.strength}</li>
+                <li>Dexterity: {monster.dexterity}</li>
+                <li>Constitution: {monster.constitution}</li>
+                <li>Intelligence: {monster.intelligence}</li>
+                <li>Wisdom: {monster.wisdom}</li>
+                <li>Charisma: {monster.charisma}</li>
+              </ul>
+            </div>
+          ))}
+        </div>
+      </main>
     </>
   );
+}
+
+export async function getStaticProps() {
+  const { data } = await client.query({
+    query: gql`
+      query Monsters {
+        monsters(limit: 400) {
+          name
+          image
+          size
+          type
+          hit_points
+          strength
+          dexterity
+          constitution
+          intelligence
+          wisdom
+          charisma
+        }
+      }
+    `,
+  });
+
+  return {
+    props: {
+      monsters: data.monsters,
+    },
+  };
 }
