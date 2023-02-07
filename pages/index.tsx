@@ -3,6 +3,7 @@ import Image from "next/image";
 //import styles from "@/styles/Home.module.css";
 import { gql } from "@apollo/client";
 import client from "../apollo-client";
+import { Card } from "components/card";
 
 export default function Home({ monsters }: any /* @TODO: Fix types */) {
   return (
@@ -14,39 +15,22 @@ export default function Home({ monsters }: any /* @TODO: Fix types */) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <div>
+        <h1>D&D 5e Monster Manual</h1>
+        <div className="card-container">
           {monsters.map((monster: any) => (
-            <div key={monster.name} style={{ marginBottom: 2 + "rem" }}>
-              <h3>{monster.name}</h3>
-              <br />
-              {monster.image && monster.image.length > 0 && (
-                <div
-                  style={{
-                    width: "300px",
-                    height: "200px",
-                    position: "relative",
-                  }}
-                >
-                  <Image
-                    src={`https://www.dnd5eapi.co${monster.image}`}
-                    alt={monster.name}
-                    fill={true}
-                  />
-                </div>
-              )}
-              <p>Type: {monster.type}</p>
-              <p>Size: {monster.size}</p>
-              <p>Hit points: {monster.hit_points}</p>
-              <br />
-              <ul>
-                <li>Strength: {monster.strength}</li>
-                <li>Dexterity: {monster.dexterity}</li>
-                <li>Constitution: {monster.constitution}</li>
-                <li>Intelligence: {monster.intelligence}</li>
-                <li>Wisdom: {monster.wisdom}</li>
-                <li>Charisma: {monster.charisma}</li>
-              </ul>
-            </div>
+            <Card
+              name={monster.name}
+              image={monster.image}
+              type={monster.type}
+              size={monster.size}
+              hit_points={monster.hit_points}
+              strength={monster.strength}
+              dexterity={monster.dexterity}
+              constitution={monster.constitution}
+              intelligence={monster.intelligence}
+              wisdom={monster.wisdom}
+              charisma={monster.charisma}
+            />
           ))}
         </div>
       </main>
