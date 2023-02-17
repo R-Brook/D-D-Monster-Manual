@@ -1,0 +1,20 @@
+.layout {
+  display: block;
+  margin-bottom: 2rem;
+  border: 1px solid black;
+  padding: 1rem;
+}
+
+.imageContainer {
+  width: 300px;
+  height: 200px;
+  position: relative;
+  background-color: #d3d3d3;
+}
+
+.cardImage {
+  object-fit: contain;
+  height: 100%;
+  display: block;
+  margin: auto;
+}
