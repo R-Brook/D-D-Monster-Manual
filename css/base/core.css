@@ -1,0 +1,25 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;400;800&family=Roboto:wght@400;500&display=swap");
+
+/*
+font-family: 'Roboto', sans-serif;
+font-family: 'Roboto Slab', serif;
+*/
+
+body {
+  font-family: "Roboto", sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Roboto Slab", serif;
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
