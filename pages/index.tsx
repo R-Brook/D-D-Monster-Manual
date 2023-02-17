@@ -23,8 +23,8 @@ export default function Home({ monsterData }: any /* @TODO: Fix types */) {
               size={monster.size}
               hit_dice={monster.hit_dice}
               hit_points={monster.hit_points}
-              //armour_class_type={monster.armourclass_type}
-              //armour_class_value={monster.armour_class_value}
+              armor_class_type={monster.armor_class[0].type}
+              armor_class_value={monster.armor_class[0].value}
               strength={monster.strength}
               dexterity={monster.dexterity}
               constitution={monster.constitution}

@@ -15,8 +15,8 @@ export interface CardProps {
   intelligence: number;
   wisdom: number;
   charisma: number;
-  //armour_class_type: string;
-  //armour_class_value: number;
+  armor_class_type: string;
+  armor_class_value: number;
 }
 
 export const Card: FC<CardProps> = ({
@@ -26,8 +26,8 @@ export const Card: FC<CardProps> = ({
   size,
   hit_dice,
   hit_points,
-  //armour_class_type,
-  //armour_class_value,
+  armor_class_type,
+  armor_class_value,
   strength,
   dexterity,
   constitution,
@@ -54,9 +54,9 @@ export const Card: FC<CardProps> = ({
       <p>Size: {size}</p>
       <p>Hit points: {hit_points}</p>
       <p>Hit dice: {hit_dice}</p>
-      {/*<p>
-        Armour class: {armour_class_value}, type: {armour_class_type}
-        </p>*/}
+      <p>
+        Armour class: {armor_class_value} of type: {armor_class_type}
+      </p>
       <br />
       <ul>
         <li>Strength: {strength}</li>
