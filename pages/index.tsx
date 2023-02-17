@@ -3,7 +3,7 @@ import client from "../apollo-graphql/apollo-client";
 import { Card } from "components/card";
 import { MONSTER_QUERY } from "apollo-graphql/queries/monsters";
 
-export default function Home({ foo }: any /* @TODO: Fix types */) {
+export default function Home({ monsterData }: any /* @TODO: Fix types */) {
   return (
     <>
       <Head>
@@ -15,7 +15,7 @@ export default function Home({ foo }: any /* @TODO: Fix types */) {
       <main>
         <h1>D&D 5e Monster Manual</h1>
         <div className="card-container">
-          {foo.map((monster: any) => (
+          {monsterData.map((monster: any) => (
             <Card
               name={monster.name}
               image={monster.image}
