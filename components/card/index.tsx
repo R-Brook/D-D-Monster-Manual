@@ -1,71 +1,52 @@
 import React, { FC } from "react";
-import Image from "next/image";
 import styles from "./card.module.css";
+import Link from "next/link";
 
 export interface CardProps {
   name: string;
-  image: string;
+  index: string;
+  image: string | null;
   type: string;
   size: string;
-  hit_dice: string;
   hit_points: number;
-  strength: number;
-  dexterity: number;
-  constitution: number;
-  intelligence: number;
-  wisdom: number;
-  charisma: number;
-  armor_class_type: string;
   armor_class_value: number;
 }
 
 export const Card: FC<CardProps> = ({
   name,
+  index,
   image,
   type,
   size,
-  hit_dice,
   hit_points,
-  armor_class_type,
   armor_class_value,
-  strength,
-  dexterity,
-  constitution,
-  intelligence,
-  wisdom,
-  charisma,
 }) => {
   return (
     <div key={name} className={styles.layout}>
-      <h2>{name}</h2>
-      <br />
-
-      <div className={styles.imageContainer}>
+      <div
+        className={
+          image === null ? styles.imageContainerGrey : styles.imageContainer
+        }
+      >
         {image && image.length > 0 && (
-          <img
-            src={`https://www.dnd5eapi.co${image}`}
-            alt={name}
-            className={styles.cardImage}
-          />
+          <img src={image} alt={name} className={styles.cardImage} />
         )}
+      </div>
+
+      <h2 className={styles.monsterName}>{name}</h2>
+
+      <div className={styles.hpContainer}>
+        <span>HP </span>
+        <span className={styles.hp}>{hit_points}</span>
       </div>
 
       <p>Type: {type}</p>
       <p>Size: {size}</p>
-      <p>Hit points: {hit_points}</p>
-      <p>Hit dice: {hit_dice}</p>
-      <p>
-        Armour class: {armor_class_value} of type: {armor_class_type}
-      </p>
+      <p>AC: {armor_class_value}</p>
       <br />
-      <ul>
-        <li>Strength: {strength}</li>
-        <li>Dexterity: {dexterity}</li>
-        <li>Constitution: {constitution}</li>
-        <li>Intelligence: {intelligence}</li>
-        <li>Wisdom: {wisdom}</li>
-        <li>Charisma: {charisma}</li>
-      </ul>
+      {/*<Link href="/monsters/[monster-index]" as={`/monsters/${index}`}>
+        More
+        </Link>*/}
     </div>
   );
 };

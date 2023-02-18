@@ -1,15 +1,46 @@
 .layout {
   display: block;
   margin-bottom: 2rem;
-  border: 1px solid black;
+  border: 2px solid black;
   padding: 1rem;
+  border-radius: 10px;
 }
 
 .imageContainer {
   width: 300px;
   height: 200px;
   position: relative;
+  background-color: #000000;
+  overflow: hidden;
+}
+
+.imageContainerGrey {
+  width: 300px;
+  height: 200px;
+  position: relative;
   background-color: #d3d3d3;
+  opacity: 0.8;
+}
+
+.topBox {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 300px;
+}
+
+.monsterName {
+  margin-top: 10px;
+}
+
+.hp {
+  font-size: 1.25rem;
+}
+
+.hpContainer {
+  border: 1px solid #000000;
+  display: inline-block;
+  padding: 0.25rem;
 }
 
 .cardImage {

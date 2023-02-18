@@ -1,9 +1,11 @@
 import Head from "next/head";
 import client from "../apollo-graphql/apollo-client";
 import { Card } from "components/card";
-import { MONSTER_QUERY } from "apollo-graphql/queries/monsters";
+import { MONSTERS_QUERY } from "apollo-graphql/queries/monsters";
+import { MonstersProps } from "types/monsters";
+import { hasImageInPublicFolder } from "utilities/images";
 
-export default function Home({ monsterData }: any /* @TODO: Fix types */) {
+export default function Home({ monstersData }: MonstersProps) {
   return (
     <>
       <Head>
@@ -12,25 +14,24 @@ export default function Home({ monsterData }: any /* @TODO: Fix types */) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
-        <h1>D&D 5e Monster Manual</h1>
+      <main className="container">
         <div className="card-container">
-          {monsterData.map((monster: any) => (
+          {monstersData.map((monster) => (
             <Card
+              key={monster.index}
               name={monster.name}
-              image={monster.image}
+              index={monster.index}
+              image={
+                monster.image && monster.image.length > 0
+                  ? `https://www.dnd5eapi.co${monster.image}`
+                  : hasImageInPublicFolder.includes(monster.index)
+                  ? `/images/monsters/${monster.index}.jpg`
+                  : null
+              }
               type={monster.type}
               size={monster.size}
-              hit_dice={monster.hit_dice}
               hit_points={monster.hit_points}
-              armor_class_type={monster.armor_class[0].type}
               armor_class_value={monster.armor_class[0].value}
-              strength={monster.strength}
-              dexterity={monster.dexterity}
-              constitution={monster.constitution}
-              intelligence={monster.intelligence}
-              wisdom={monster.wisdom}
-              charisma={monster.charisma}
             />
           ))}
         </div>
@@ -40,19 +41,19 @@ export default function Home({ monsterData }: any /* @TODO: Fix types */) {
 }
 
 export async function getStaticProps() {
-  let monsterData = {} as any;
+  let monstersData = {} as MonstersProps;
 
   await client
     .query({
-      query: MONSTER_QUERY,
+      query: MONSTERS_QUERY,
     })
     .then((res) => {
-      monsterData = res.data.monsters;
+      monstersData = res.data.monsters;
     });
 
   return {
     props: {
-      monsterData,
+      monstersData,
     },
   };
 }
