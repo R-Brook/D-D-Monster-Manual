@@ -1,10 +1,8 @@
 .layout {
   display: block;
   margin-bottom: 2rem;
-  /*border: 10px solid #6e4c16;*/
   border: 2px solid black;
   padding: 1rem;
-  /*background-color: #f2e3b8;*/
   border-radius: 10px;
 }
 
