@@ -1,11 +1,29 @@
+import React from "react";
 import Head from "next/head";
 import client from "../apollo-graphql/apollo-client";
 import { Card } from "components/card";
 import { MONSTERS_QUERY } from "apollo-graphql/queries/monsters";
 import { MonstersProps } from "types/monsters";
 import { hasImageInPublicFolder } from "utilities/images";
+import { Select } from "components/select";
+import { MonsterSize } from "utilities/monster-filters";
 
 export default function Home({ monstersData }: MonstersProps) {
+  const [selectedSize, setSelectedSize] = React.useState("ALL");
+
+  let filteredSize;
+
+  selectedSize === "ALL"
+    ? (filteredSize = monstersData)
+    : (filteredSize = monstersData.filter(
+        (monster) => monster.size === selectedSize
+      ));
+
+  const handleSizeSelection = (event: any) => {
+    const value = event.target.value;
+    setSelectedSize(value.toUpperCase());
+  };
+
   return (
     <>
       <Head>
@@ -15,24 +33,51 @@ export default function Home({ monstersData }: MonstersProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="container">
-        <div className="card-container">
-          {monstersData.map((monster) => (
-            <Card
-              key={monster.index}
-              name={monster.name}
-              index={monster.index}
-              image={
-                monster.image && monster.image.length > 0
-                  ? `https://www.dnd5eapi.co${monster.image}`
-                  : hasImageInPublicFolder.includes(monster.index)
-                  ? `/images/monsters/${monster.index}.jpg`
-                  : null
-              }
-              type={monster.type}
-              size={monster.size}
-              hit_points={monster.hit_points}
-              armor_class_value={monster.armor_class[0].value}
-            />
+        <div className="cards-container">
+          <div className="filter-container">
+            <Select
+              required={false}
+              label={"Monster size"}
+              name={"monster-size"}
+              id={"size"}
+              value={selectedSize}
+              onChange={(event) => handleSizeSelection(event)}
+            >
+              {MonsterSize.map((size) => (
+                <option value={size} key={size}>
+                  {size}
+                </option>
+              ))}
+            </Select>
+          </div>
+          <div className="filter-container">
+            {selectedSize !== "ALL" && (
+              <div>
+                Monster size: {selectedSize}
+                <button onClick={() => setSelectedSize("ALL")}>X</button>
+              </div>
+            )}
+          </div>
+
+          {filteredSize.map((monster) => (
+            <div className="card-container">
+              <Card
+                key={monster.index}
+                name={monster.name}
+                index={monster.index}
+                image={
+                  monster.image && monster.image.length > 0
+                    ? `https://www.dnd5eapi.co${monster.image}`
+                    : hasImageInPublicFolder.includes(monster.index)
+                    ? `/images/monsters/${monster.index}.jpg`
+                    : null
+                }
+                type={monster.type}
+                size={monster.size}
+                hit_points={monster.hit_points}
+                armor_class_value={monster.armor_class[0].value}
+              />
+            </div>
           ))}
         </div>
       </main>

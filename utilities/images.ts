@@ -1,1 +1,1 @@
-export const hasImageInPublicFolder = ["giant-crocodile"];
+export const hasImageInPublicFolder = ["giant-crocodile", "owl", "sea-horse"];
