@@ -20,14 +20,46 @@ h6 {
   font-family: "Roboto Slab", serif;
 }
 
-.card-container {
+.cards-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 2rem;
   justify-content: center;
+  max-width: 1100px;
+  margin: auto;
+}
+
+.card-container {
+  width: 100%;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
 }
 
 .container {
   max-width: 1200px;
-  margin: auto;
+  margin-left: 2rem;
+  margin-right: 2rem;
+}
+
+@media screen and (min-width: 40rem) {
+  .card-container {
+    width: 45%;
+  }
+  .container {
+    margin: auto;
+  }
+}
+
+@media screen and (min-width: 62rem) {
+  .card-container {
+    width: 30%;
+  }
+  .container {
+    margin: auto;
+  }
+}
+
+.filter-container {
+  display: block;
+  margin-bottom: 2rem;
+  width: 100%;
 }
