@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Head from "next/head";
 import client from "../apollo-graphql/apollo-client";
 import { Card } from "components/card";
@@ -6,23 +6,64 @@ import { MONSTERS_QUERY } from "apollo-graphql/queries/monsters";
 import { MonstersProps } from "types/monsters";
 import { hasImageInPublicFolder } from "utilities/images";
 import { Select } from "components/select";
-import { MonsterSize } from "utilities/monster-filters";
+import { MonsterAC, MonsterSize, MonsterType } from "utilities/monster-filters";
 
 export default function Home({ monstersData }: MonstersProps) {
+  const [filteredList, setFilteredList] = React.useState(monstersData);
   const [selectedSize, setSelectedSize] = React.useState("ALL");
+  const [selectedType, setSelectedType] = React.useState("ALL");
+  const [selectedAC, setSelectedAC] = React.useState("ALL");
 
-  let filteredSize;
+  const filterBySize = (filteredData: any) => {
+    if (selectedSize === "ALL") {
+      return filteredData;
+    }
+    const filteredSize = filteredData.filter(
+      (monster: { size: string }) => monster.size === selectedSize
+    );
+    return filteredSize;
+  };
 
-  selectedSize === "ALL"
-    ? (filteredSize = monstersData)
-    : (filteredSize = monstersData.filter(
-        (monster) => monster.size === selectedSize
-      ));
+  const filterByType = (filteredData: any) => {
+    if (selectedType === "ALL") {
+      return filteredData;
+    }
+    const filteredType = filteredData.filter(
+      (monster: { type: string }) => monster.type === selectedType
+    );
+    return filteredType;
+  };
+
+  const filterByAC = (filteredData: any) => {
+    if (selectedAC === "ALL") {
+      return filteredData;
+    }
+    const filteredAC = filteredData.filter(
+      (monster: { armor_class: { value: string }[] }) =>
+        monster.armor_class[0].value.toString() === selectedAC
+    );
+    return filteredAC;
+  };
 
   const handleSizeSelection = (event: any) => {
     const value = event.target.value;
     setSelectedSize(value.toUpperCase());
   };
+  const handleTypeSelection = (event: any) => {
+    const value = event.target.value;
+    setSelectedType(value.toUpperCase());
+  };
+  const handleACSelection = (event: any) => {
+    const value = event.target.value;
+    setSelectedAC(value.toUpperCase());
+  };
+
+  useEffect(() => {
+    let filteredData = filterBySize(monstersData);
+    filteredData = filterByType(filteredData);
+    filteredData = filterByAC(filteredData);
+    setFilteredList(filteredData);
+  }, [selectedSize, selectedType, selectedAC]);
 
   return (
     <>
@@ -49,6 +90,34 @@ export default function Home({ monstersData }: MonstersProps) {
                 </option>
               ))}
             </Select>
+            <Select
+              required={false}
+              label={"Monster type"}
+              name={"monster-type"}
+              id={"type"}
+              value={selectedType}
+              onChange={(event) => handleTypeSelection(event)}
+            >
+              {MonsterType.map((type) => (
+                <option value={type} key={type}>
+                  {type}
+                </option>
+              ))}
+            </Select>
+            <Select
+              required={false}
+              label={"Monster AC value"}
+              name={"monster-ac"}
+              id={"ac"}
+              value={selectedAC}
+              onChange={(event) => handleACSelection(event)}
+            >
+              {MonsterAC.map((ac) => (
+                <option value={ac} key={ac}>
+                  {ac}
+                </option>
+              ))}
+            </Select>
           </div>
           <div className="filter-container">
             {selectedSize !== "ALL" && (
@@ -57,9 +126,21 @@ export default function Home({ monstersData }: MonstersProps) {
                 <button onClick={() => setSelectedSize("ALL")}>X</button>
               </div>
             )}
+            {selectedType !== "ALL" && (
+              <div>
+                Monster type: {selectedType}
+                <button onClick={() => setSelectedType("ALL")}>X</button>
+              </div>
+            )}
+            {selectedAC !== "ALL" && (
+              <div>
+                AC value: {selectedAC}
+                <button onClick={() => setSelectedAC("ALL")}>X</button>
+              </div>
+            )}
           </div>
 
-          {filteredSize.map((monster) => (
+          {filteredList.map((monster) => (
             <div className="card-container">
               <Card
                 key={monster.index}
