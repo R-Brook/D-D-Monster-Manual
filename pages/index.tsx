@@ -123,7 +123,7 @@ export default function Home({ monstersData }: MonstersProps) {
             </Select>
           </div>
           <div className="selected-filter-container">
-            {resultsTotal} results
+            <div className="totals">{resultsTotal} results</div>
             {selectedSize !== "ALL" && (
               <SelectedFilter
                 label={"Monster size"}
