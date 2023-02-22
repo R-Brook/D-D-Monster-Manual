@@ -7,12 +7,14 @@ import { MonstersProps } from "types/monsters";
 import { hasImageInPublicFolder } from "utilities/images";
 import { Select } from "components/select";
 import { MonsterAC, MonsterSize, MonsterType } from "utilities/monster-filters";
+import { SelectedFilter } from "components/selectedFilter";
 
 export default function Home({ monstersData }: MonstersProps) {
   const [filteredList, setFilteredList] = React.useState(monstersData);
   const [selectedSize, setSelectedSize] = React.useState("ALL");
   const [selectedType, setSelectedType] = React.useState("ALL");
   const [selectedAC, setSelectedAC] = React.useState("ALL");
+  const [resultsTotal, setResultsTotal] = React.useState();
 
   const filterBySize = (filteredData: any) => {
     if (selectedSize === "ALL") {
@@ -63,6 +65,7 @@ export default function Home({ monstersData }: MonstersProps) {
     filteredData = filterByType(filteredData);
     filteredData = filterByAC(filteredData);
     setFilteredList(filteredData);
+    setResultsTotal(filteredData.length);
   }, [selectedSize, selectedType, selectedAC]);
 
   return (
@@ -119,24 +122,28 @@ export default function Home({ monstersData }: MonstersProps) {
               ))}
             </Select>
           </div>
-          <div className="filter-container">
+          <div className="selected-filter-container">
+            {resultsTotal} results
             {selectedSize !== "ALL" && (
-              <div>
-                Monster size: {selectedSize}
-                <button onClick={() => setSelectedSize("ALL")}>X</button>
-              </div>
+              <SelectedFilter
+                label={"Monster size"}
+                selected_value={selectedSize}
+                onClick={() => setSelectedSize("ALL")}
+              />
             )}
             {selectedType !== "ALL" && (
-              <div>
-                Monster type: {selectedType}
-                <button onClick={() => setSelectedType("ALL")}>X</button>
-              </div>
+              <SelectedFilter
+                label={"Monster type"}
+                selected_value={selectedType}
+                onClick={() => setSelectedType("ALL")}
+              />
             )}
             {selectedAC !== "ALL" && (
-              <div>
-                AC value: {selectedAC}
-                <button onClick={() => setSelectedAC("ALL")}>X</button>
-              </div>
+              <SelectedFilter
+                label={"AC value"}
+                selected_value={selectedAC}
+                onClick={() => setSelectedAC("ALL")}
+              />
             )}
           </div>
 

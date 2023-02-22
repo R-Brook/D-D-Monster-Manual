@@ -31,6 +31,7 @@ export const Select: FC<SelectProps> = ({
         required={required}
         onChange={onChange}
         onBlur={onBlur}
+        className={styles.select}
       >
         {children}
       </select>
