@@ -1,11 +1,16 @@
 .container {
   background-color: #d3d3d3;
-  display: inline-block;
+  display: flex;
+  align-items: baseline;
   padding: 0.5rem 1rem;
 }
 
 .remove {
   background: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-left: 0.5rem;
   border: 1px solid black;
+  padding: 0.25rem;
 }
