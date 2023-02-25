@@ -23,15 +23,14 @@ export const SelectedFilter: FC<SelectedFilterProps> = ({
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 460.77 460.77"
           stroke="#000000"
-          stroke-width="0.00460775"
+          strokeWidth="0.00460775"
         >
-          <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+          <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
           <g
             id="SVGRepo_tracerCarrier"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeLinecap="round"
             stroke="#CCCCCC"
-            stroke-width="11.98015"
+            strokeWidth="11.98015"
           ></g>
           <g id="SVGRepo_iconCarrier">
             {" "}

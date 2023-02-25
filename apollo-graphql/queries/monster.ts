@@ -1,9 +1,10 @@
 import { gql } from "@apollo/client";
 
 export const MONSTER_QUERY = gql`
-  query Monster {
-    monster(limit: 400) {
+  query Monster($path: String!) {
+    monster(index: $path) {
       name
+      index
       image
       xp
       size

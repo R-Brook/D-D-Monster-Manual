@@ -1,15 +1,23 @@
 export interface MonsterProps {
-  monstersData: monsterData[];
+  monsterData: monsterData[];
 }
 
 export interface monsterData {
+  __typename: string;
   index: string;
   name: string;
-  image: string;
+  image: string | null;
   xp: number;
   size: string;
   type: string;
   hit_points: number;
+  hit_dice: string;
+  strength: number;
+  dexterity: number;
+  constitution: number;
+  intelligence: number;
+  wisdom: number;
+  charisma: number;
   armor_class: ArmorProps[];
 }
 

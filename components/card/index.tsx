@@ -44,9 +44,11 @@ export const Card: FC<CardProps> = ({
       <p>Size: {size}</p>
       <p>AC: {armor_class_value}</p>
       <br />
-      {/*<Link href="/monsters/[monster-index]" as={`/monsters/${index}`}>
-        More
-        </Link>*/}
+      {
+        <Link href="/monster/[index]" as={`/monster/${index}`}>
+          More
+        </Link>
+      }
     </div>
   );
 };
