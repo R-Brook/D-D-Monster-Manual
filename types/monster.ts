@@ -1,5 +1,5 @@
 export interface MonsterProps {
-  monsterData: monsterData[];
+  monsterData: monsterData;
 }
 
 export interface monsterData {
@@ -18,9 +18,14 @@ export interface monsterData {
   intelligence: number;
   wisdom: number;
   charisma: number;
-  armor_class: ArmorProps[];
+  armor_class: ArmorProps;
 }
 
 export interface ArmorProps {
+  0: ArmorInnerProps;
+}
+
+export interface ArmorInnerProps {
   value: number;
+  type: string;
 }

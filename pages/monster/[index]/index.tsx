@@ -7,7 +7,7 @@ import { MONSTER_QUERY } from "apollo-graphql/queries/monster";
 import { MONSTER_INDEX_QUERY } from "apollo-graphql/queries/monsterByIndex";
 
 export default function MonsterPage({ monsterData }: MonsterProps) {
-  console.log(monsterData);
+  console.log(monsterData.armor_class[0]);
 
   return (
     <>
@@ -18,7 +18,28 @@ export default function MonsterPage({ monsterData }: MonsterProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <h1>Foo</h1>
+        <h1>{monsterData.name}</h1>
+        <ul>
+          <li>XP: {monsterData.xp}</li>
+          <li>Size: {monsterData.size}</li>
+          <li>Type: {monsterData.type}</li>
+          <li>Hit points: {monsterData.hit_points}</li>
+          <li>Hit dice: {monsterData.hit_dice}</li>
+          <li>Ability scores:</li>
+          <ul>
+            <li>Strength: {monsterData.strength}</li>
+            <li>Dexterity: {monsterData.dexterity}</li>
+            <li>Constitution: {monsterData.constitution}</li>
+            <li>Intelligence: {monsterData.intelligence}</li>
+            <li>Wisdom: {monsterData.wisdom}</li>
+            <li>Charisma: {monsterData.charisma}</li>
+          </ul>
+          <li>Armour:</li>
+          <ul>
+            <li>Armour type: {monsterData.armor_class[0].type}</li>
+            <li>Armour value: {monsterData.armor_class[0].value}</li>
+          </ul>
+        </ul>
       </main>
     </>
   );
