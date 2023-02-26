@@ -5,22 +5,39 @@ export const MONSTER_QUERY = gql`
     monster(index: $path) {
       name
       index
+      challenge_rating
       image
       xp
       size
       type
       hit_dice
       hit_points
-      armor_class {
-        type
-        value
-      }
       strength
       dexterity
       constitution
       intelligence
       wisdom
       charisma
+      armor_class {
+        type
+        value
+      }
+      hit_points_roll
+      speed {
+        burrow
+        climb
+        fly
+        swim
+        walk
+      }
+      languages
+      senses {
+        blindsight
+        darkvision
+        passive_perception
+        tremorsense
+        truesight
+      }
     }
   }
 `;
