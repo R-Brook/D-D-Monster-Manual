@@ -45,7 +45,11 @@ export const Card: FC<CardProps> = ({
       <p>AC: {armor_class_value}</p>
       <br />
       {
-        <Link href="/monster/[index]" as={`/monster/${index}`}>
+        <Link
+          href="/monster/[index]"
+          as={`/monster/${index}`}
+          className={styles.button}
+        >
           More
         </Link>
       }
