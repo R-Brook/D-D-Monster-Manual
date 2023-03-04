@@ -8,13 +8,17 @@ import { hasImageInPublicFolder } from "utilities/images";
 import { Select } from "components/select";
 import { MonsterAC, MonsterSize, MonsterType } from "utilities/monster-filters";
 import { SelectedFilter } from "components/selectedFilter";
+import { Pagination } from "components/pagination";
 
 export default function Home({ monstersData }: MonstersProps) {
   const [filteredList, setFilteredList] = React.useState(monstersData);
   const [selectedSize, setSelectedSize] = React.useState("ALL");
   const [selectedType, setSelectedType] = React.useState("ALL");
   const [selectedAC, setSelectedAC] = React.useState("ALL");
-  const [resultsTotal, setResultsTotal] = React.useState();
+  const [resultsTotal, setResultsTotal] = React.useState(336);
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const [entriesPerPage, setEntriesPerPage] = React.useState(24);
+  const [numberOfPages, setNumberOfPages] = React.useState(1);
 
   const filterBySize = (filteredData: any) => {
     if (selectedSize === "ALL") {
@@ -68,6 +72,31 @@ export default function Home({ monstersData }: MonstersProps) {
     setResultsTotal(filteredData.length);
   }, [selectedSize, selectedType, selectedAC]);
 
+  useEffect(() => {
+    setNumberOfPages(Math.ceil(resultsTotal / entriesPerPage));
+  }, [resultsTotal]);
+
+  useEffect(() => {
+    // go through filteredList x numberOfPages, and cut into sections of a certain size
+    let foo = 0;
+    let pageArray = [];
+    for (let i = 1; i <= numberOfPages; i++) {
+      const barr = filteredList.slice(foo, (foo += entriesPerPage));
+
+      pageArray.push(barr);
+    }
+    //console.log(pageArray);
+  }, [numberOfPages]);
+
+  /*
+  when clicking on pagination page, match it with object in pageArray
+  pass index of pageArray + 1 to pagination active
+  */
+
+  const handleChange = (value: string) => {
+    //
+  };
+
   return (
     <>
       <Head>
@@ -77,6 +106,12 @@ export default function Home({ monstersData }: MonstersProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="container">
+        <Pagination
+          onChange={handleChange}
+          number_of_pages={numberOfPages}
+          results_total={resultsTotal}
+          entries_per_page={entriesPerPage}
+        />
         <div className="cards-container">
           <div className="filter-container">
             <Select
@@ -123,7 +158,9 @@ export default function Home({ monstersData }: MonstersProps) {
             </Select>
           </div>
           <div className="selected-filter-container">
-            <div className="totals">{resultsTotal} results</div>
+            <div className="totals">
+              {resultsTotal} results. {numberOfPages}
+            </div>
             {selectedSize !== "ALL" && (
               <SelectedFilter
                 label={"Monster size"}
