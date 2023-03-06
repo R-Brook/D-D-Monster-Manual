@@ -20,16 +20,19 @@ import {
 
 export default function Home({ monstersData }: MonstersProps) {
   const [filteredList, setFilteredList] = React.useState(monstersData);
-  const [currentPage, setCurrentPage] = React.useState(1);
-
-  const [shownItems, setShownItems] = React.useState(filteredList);
 
   // From context
 
   const { monsterSize, monsterType, monsterAC } = useSelectedFilters();
   const dispatchFilters = useSelectedFiltersDispatch();
 
-  const { numberOfPages, resultsTotal, entriesPerPage } = usePagination();
+  const {
+    numberOfPages,
+    resultsTotal,
+    entriesPerPage,
+    currentPage,
+    shownItems,
+  } = usePagination();
   const dispatchPagination = usePaginationDispatch();
 
   /*
@@ -79,8 +82,6 @@ export default function Home({ monstersData }: MonstersProps) {
       type: "setResultsTotal",
       payload: filteredData.length,
     });
-
-    //setResultsTotal(filteredData.length);
   }, [monsterSize, monsterType, monsterAC]);
 
   useEffect(() => {
@@ -101,22 +102,13 @@ export default function Home({ monstersData }: MonstersProps) {
 
       pageArray.push(barr);
     }
-    //console.log(pageArray);
-  }, [numberOfPages]);
 
-  useEffect(() => {
-    console.log("pageArray 0", pageArray[0]);
-    console.log("pageArray all", pageArray);
-  }, [pageArray]);
-
-  /*
-  when clicking on pagination page, match it with object in pageArray
-  pass index of pageArray + 1 to pagination active
-  */
-
-  const handleChange = (value: string) => {
-    //
-  };
+    dispatchPagination({
+      type: "setShownItems",
+      payload: pageArray[currentPage - 1],
+    });
+    console.log(shownItems);
+  }, [numberOfPages, currentPage]);
 
   return (
     <>
@@ -127,12 +119,7 @@ export default function Home({ monstersData }: MonstersProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="container">
-        <Pagination
-          onChange={handleChange}
-          number_of_pages={numberOfPages}
-          results_total={resultsTotal}
-          entries_per_page={entriesPerPage}
-        />
+        <Pagination entries_per_page={entriesPerPage} />
         <div className="cards-container">
           <div className="filter-container">
             <Select
@@ -195,7 +182,7 @@ export default function Home({ monstersData }: MonstersProps) {
           </div>
           <div className="selected-filter-container">
             <div className="totals">
-              {resultsTotal} results. {numberOfPages}
+              {resultsTotal} results. {numberOfPages} pages
             </div>
             {monsterSize !== "ALL" && (
               <SelectedFilter
@@ -226,7 +213,7 @@ export default function Home({ monstersData }: MonstersProps) {
             )}
           </div>
 
-          {filteredList.map((monster) => (
+          {shownItems.map((monster) => (
             <div className="card-container">
               <Card
                 key={monster.index}

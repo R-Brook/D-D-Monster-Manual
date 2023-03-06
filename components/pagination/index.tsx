@@ -2,40 +2,43 @@ import React, { FC, useEffect } from "react";
 import styles from "./pagination.module.css";
 import classNames from "classnames";
 
+import {
+  usePagination,
+  usePaginationDispatch,
+} from "context/pagination/paginationContext";
+
 export interface PaginationProps {
-  //value: (value: string) => void;
   onChange?: (value: string) => void;
-  number_of_pages: number;
-  results_total: number;
   entries_per_page: number;
 }
 
 export const Pagination: FC<PaginationProps> = ({
-  onChange,
-  number_of_pages,
-  results_total,
+  //onChange,
   entries_per_page,
 }) => {
-  const [currentPage, setCurrentPage] = React.useState(1);
+  const { numberOfPages, resultsTotal, entriesPerPage, currentPage } =
+    usePagination();
+  const dispatchPagination = usePaginationDispatch();
 
-  const iteratePages = Array.from(Array(number_of_pages).keys());
-  /*
-  useEffect(() => {
-    console.log(currentPage);
-  }, [currentPage]);
-  */
+  const iteratePages = Array.from(Array(numberOfPages).keys());
 
   useEffect(() => {
-    setCurrentPage(1);
-  }, [results_total]);
+    dispatchPagination({
+      type: "setCurrentPage",
+      payload: 1,
+    });
+  }, [resultsTotal]);
 
   return (
     <div className={styles.container}>
       <button
         className={classNames(styles.button, styles.chevron)}
-        onClick={() =>
-          setCurrentPage(currentPage > 1 ? currentPage - 1 : currentPage)
-        }
+        onClick={() => {
+          dispatchPagination({
+            type: "setCurrentPage",
+            payload: currentPage > 1 ? currentPage - 1 : currentPage,
+          });
+        }}
       >
         <svg
           height="12px"
@@ -69,18 +72,25 @@ export const Pagination: FC<PaginationProps> = ({
             styles.button,
             pageNumber + 1 === currentPage ? styles.selected : styles.unselected
           )}
-          onClick={() => setCurrentPage(pageNumber + 1)}
+          onClick={() => {
+            dispatchPagination({
+              type: "setCurrentPage",
+              payload: pageNumber + 1,
+            });
+          }}
         >
           {pageNumber + 1}
         </button>
       ))}
       <button
         className={classNames(styles.button, styles.chevron)}
-        onClick={() =>
-          setCurrentPage(
-            currentPage < number_of_pages ? currentPage + 1 : currentPage
-          )
-        }
+        onClick={() => {
+          dispatchPagination({
+            type: "setCurrentPage",
+            payload:
+              currentPage < numberOfPages ? currentPage + 1 : currentPage,
+          });
+        }}
       >
         <svg
           height="12px"
