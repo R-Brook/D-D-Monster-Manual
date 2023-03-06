@@ -41,10 +41,9 @@ export const Pagination: FC<PaginationProps> = ({
           height="12px"
           width="12px"
           viewBox="0 0 185.343 185.343"
-          fill="#000000"
           transform="rotate(0)matrix(-1, 0, 0, 1, 0, 0)"
         >
-          <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+          <g id="SVGRepo_bgCarrier" strokeWidth="2"></g>
           <g
             id="SVGRepo_tracerCarrier"
             strokeLinecap="round"
@@ -88,7 +87,6 @@ export const Pagination: FC<PaginationProps> = ({
           width="12px"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 185.343 185.343"
-          fill="#000000"
           transform="rotate(0)"
         >
           <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
