@@ -50,4 +50,5 @@ export const MonsterAC = [
   20,
   21,
   22,
+  25,
 ];
