@@ -4,17 +4,6 @@ export type SelectedFiltersState = {
   monsterAC: string;
 };
 
-/*
-export type Pagination = {
-  resultsTotal: number;
-  filteredList: any;
-  currentPage: number;
-  entriesPerPage: number;
-  numberOfPages: number;
-  shownItems: any;
-};
-*/
-
 export type Action =
   | { type: "setMonsterSize"; payload: string }
   | { type: "clearMonsterSize" }

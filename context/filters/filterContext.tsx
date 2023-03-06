@@ -48,7 +48,7 @@ const reducer = (
       };
 
     default:
-      throw new Error("Error - action not recognised");
+      throw new Error("Error - filter action not recognised");
   }
 };
 
