@@ -9,77 +9,93 @@ import { Select } from "components/select";
 import { MonsterAC, MonsterSize, MonsterType } from "utilities/monster-filters";
 import { SelectedFilter } from "components/selectedFilter";
 import { Pagination } from "components/pagination";
+import {
+  useSelectedFilters,
+  useSelectedFiltersDispatch,
+} from "context/filters/filterContext";
+import {
+  usePagination,
+  usePaginationDispatch,
+} from "context/pagination/paginationContext";
 
 export default function Home({ monstersData }: MonstersProps) {
   const [filteredList, setFilteredList] = React.useState(monstersData);
-  const [selectedSize, setSelectedSize] = React.useState("ALL");
-  const [selectedType, setSelectedType] = React.useState("ALL");
-  const [selectedAC, setSelectedAC] = React.useState("ALL");
-  const [resultsTotal, setResultsTotal] = React.useState(336);
   const [currentPage, setCurrentPage] = React.useState(1);
-  const [entriesPerPage, setEntriesPerPage] = React.useState(24);
-  const [numberOfPages, setNumberOfPages] = React.useState(1);
+
+  const [shownItems, setShownItems] = React.useState(filteredList);
+
+  // From context
+
+  const { monsterSize, monsterType, monsterAC } = useSelectedFilters();
+  const dispatchFilters = useSelectedFiltersDispatch();
+
+  const { numberOfPages, resultsTotal, entriesPerPage } = usePagination();
+  const dispatchPagination = usePaginationDispatch();
+
+  /*
+  // @TODO: Refactor to function
+*/
 
   const filterBySize = (filteredData: any) => {
-    if (selectedSize === "ALL") {
+    if (monsterSize === "ALL") {
       return filteredData;
     }
     const filteredSize = filteredData.filter(
-      (monster: { size: string }) => monster.size === selectedSize
+      (monster: { size: string }) => monster.size === monsterSize
     );
     return filteredSize;
   };
 
   const filterByType = (filteredData: any) => {
-    if (selectedType === "ALL") {
+    if (monsterType === "ALL") {
       return filteredData;
     }
     const filteredType = filteredData.filter(
-      (monster: { type: string }) => monster.type === selectedType
+      (monster: { type: string }) => monster.type === monsterType
     );
     return filteredType;
   };
 
   const filterByAC = (filteredData: any) => {
-    if (selectedAC === "ALL") {
+    if (monsterAC === "ALL") {
       return filteredData;
     }
     const filteredAC = filteredData.filter(
       (monster: { armor_class: { value: string }[] }) =>
-        monster.armor_class[0].value.toString() === selectedAC
+        monster.armor_class[0].value.toString() === monsterAC
     );
     return filteredAC;
   };
 
-  const handleSizeSelection = (event: any) => {
-    const value = event.target.value;
-    setSelectedSize(value.toUpperCase());
-  };
-  const handleTypeSelection = (event: any) => {
-    const value = event.target.value;
-    setSelectedType(value.toUpperCase());
-  };
-  const handleACSelection = (event: any) => {
-    const value = event.target.value;
-    setSelectedAC(value.toUpperCase());
-  };
+  /* */
 
   useEffect(() => {
     let filteredData = filterBySize(monstersData);
     filteredData = filterByType(filteredData);
     filteredData = filterByAC(filteredData);
     setFilteredList(filteredData);
-    setResultsTotal(filteredData.length);
-  }, [selectedSize, selectedType, selectedAC]);
+
+    dispatchPagination({
+      type: "setResultsTotal",
+      payload: filteredData.length,
+    });
+
+    //setResultsTotal(filteredData.length);
+  }, [monsterSize, monsterType, monsterAC]);
 
   useEffect(() => {
-    setNumberOfPages(Math.ceil(resultsTotal / entriesPerPage));
+    dispatchPagination({
+      type: "setNumberOfPages",
+      payload: Math.ceil(resultsTotal / entriesPerPage),
+    });
   }, [resultsTotal]);
+
+  let pageArray: any[][] = [filteredList];
 
   useEffect(() => {
     // go through filteredList x numberOfPages, and cut into sections of a certain size
     let foo = 0;
-    let pageArray = [];
+    pageArray = [];
     for (let i = 1; i <= numberOfPages; i++) {
       const barr = filteredList.slice(foo, (foo += entriesPerPage));
 
@@ -87,6 +103,11 @@ export default function Home({ monstersData }: MonstersProps) {
     }
     //console.log(pageArray);
   }, [numberOfPages]);
+
+  useEffect(() => {
+    console.log("pageArray 0", pageArray[0]);
+    console.log("pageArray all", pageArray);
+  }, [pageArray]);
 
   /*
   when clicking on pagination page, match it with object in pageArray
@@ -119,8 +140,13 @@ export default function Home({ monstersData }: MonstersProps) {
               label={"Monster size"}
               name={"monster-size"}
               id={"size"}
-              value={selectedSize}
-              onChange={(event) => handleSizeSelection(event)}
+              value={monsterSize}
+              onChange={(event) => {
+                dispatchFilters({
+                  type: "setMonsterSize",
+                  payload: event.target.value,
+                });
+              }}
             >
               {MonsterSize.map((size) => (
                 <option value={size} key={size}>
@@ -133,8 +159,13 @@ export default function Home({ monstersData }: MonstersProps) {
               label={"Monster type"}
               name={"monster-type"}
               id={"type"}
-              value={selectedType}
-              onChange={(event) => handleTypeSelection(event)}
+              value={monsterType}
+              onChange={(event) => {
+                dispatchFilters({
+                  type: "setMonsterType",
+                  payload: event.target.value,
+                });
+              }}
             >
               {MonsterType.map((type) => (
                 <option value={type} key={type}>
@@ -147,8 +178,13 @@ export default function Home({ monstersData }: MonstersProps) {
               label={"Monster AC value"}
               name={"monster-ac"}
               id={"ac"}
-              value={selectedAC}
-              onChange={(event) => handleACSelection(event)}
+              value={monsterAC}
+              onChange={(event) => {
+                dispatchFilters({
+                  type: "setMonsterAC",
+                  payload: event.target.value,
+                });
+              }}
             >
               {MonsterAC.map((ac) => (
                 <option value={ac} key={ac}>
@@ -161,25 +197,31 @@ export default function Home({ monstersData }: MonstersProps) {
             <div className="totals">
               {resultsTotal} results. {numberOfPages}
             </div>
-            {selectedSize !== "ALL" && (
+            {monsterSize !== "ALL" && (
               <SelectedFilter
                 label={"Monster size"}
-                selected_value={selectedSize}
-                onClick={() => setSelectedSize("ALL")}
+                selected_value={monsterSize}
+                onClick={() => {
+                  dispatchFilters({ type: "clearMonsterSize" });
+                }}
               />
             )}
-            {selectedType !== "ALL" && (
+            {monsterType !== "ALL" && (
               <SelectedFilter
                 label={"Monster type"}
-                selected_value={selectedType}
-                onClick={() => setSelectedType("ALL")}
+                selected_value={monsterType}
+                onClick={() => {
+                  dispatchFilters({ type: "clearMonsterType" });
+                }}
               />
             )}
-            {selectedAC !== "ALL" && (
+            {monsterAC !== "ALL" && (
               <SelectedFilter
                 label={"AC value"}
-                selected_value={selectedAC}
-                onClick={() => setSelectedAC("ALL")}
+                selected_value={monsterAC}
+                onClick={() => {
+                  dispatchFilters({ type: "clearMonsterAC" });
+                }}
               />
             )}
           </div>
