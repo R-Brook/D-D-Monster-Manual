@@ -10,22 +10,16 @@ import { MonsterAC, MonsterSize, MonsterType } from "utilities/monster-filters";
 import { SelectedFilter } from "components/selectedFilter";
 import { Pagination } from "components/pagination";
 import {
-  useSelectedFilters,
-  useSelectedFiltersDispatch,
-} from "context/filters/filterContext";
-import {
   usePagination,
   usePaginationDispatch,
 } from "context/pagination/paginationContext";
+import { useRouter } from "next/router";
 
 export default function Home({ monstersData }: MonstersProps) {
+  const router = useRouter();
   const [filteredList, setFilteredList] = React.useState(monstersData);
 
   // From context
-
-  const { monsterSize, monsterType, monsterAC } = useSelectedFilters();
-  const dispatchFilters = useSelectedFiltersDispatch();
-
   const {
     numberOfPages,
     resultsTotal,
@@ -39,38 +33,53 @@ export default function Home({ monstersData }: MonstersProps) {
   // @TODO: Refactor to function
 */
 
+  console.log("router query", router.query);
+
+  const { type = "ALL", size = "ALL", ac = "ALL" } = router.query;
+
   const filterBySize = (filteredData: any) => {
-    if (monsterSize === "ALL") {
+    if (size === "ALL" || undefined) {
       return filteredData;
     }
     const filteredSize = filteredData.filter(
-      (monster: { size: string }) => monster.size === monsterSize
+      (monster: { size: string }) => monster.size === size
     );
     return filteredSize;
   };
 
   const filterByType = (filteredData: any) => {
-    if (monsterType === "ALL") {
+    if (type === "ALL" || undefined) {
       return filteredData;
     }
     const filteredType = filteredData.filter(
-      (monster: { type: string }) => monster.type === monsterType
+      (monster: { type: string }) => monster.type === type
     );
     return filteredType;
   };
 
   const filterByAC = (filteredData: any) => {
-    if (monsterAC === "ALL") {
+    if (ac === "ALL" || undefined) {
       return filteredData;
     }
     const filteredAC = filteredData.filter(
       (monster: { armor_class: { value: string }[] }) =>
-        monster.armor_class[0].value.toString() === monsterAC
+        monster.armor_class[0].value.toString() === ac
     );
     return filteredAC;
   };
 
-  /* */
+  const setQueryParam = (param: string, event: { target: { value: any } }) => {
+    const value = event.target.value;
+    value === "ALL"
+      ? router.push(`/`, undefined, { shallow: true })
+      : router.push(`?${param}=${value}`, undefined, { shallow: true });
+  };
+
+  const clearParam = (value: string) => {
+    const { pathname, query } = router;
+    delete router.query[value];
+    router.replace({ pathname, query }, undefined, { shallow: true });
+  };
 
   useEffect(() => {
     let filteredData = filterBySize(monstersData);
@@ -82,7 +91,7 @@ export default function Home({ monstersData }: MonstersProps) {
       type: "setResultsTotal",
       payload: filteredData.length,
     });
-  }, [monsterSize, monsterType, monsterAC]);
+  }, [size, type, ac]);
 
   useEffect(() => {
     dispatchPagination({
@@ -127,12 +136,9 @@ export default function Home({ monstersData }: MonstersProps) {
               label={"Monster size"}
               name={"monster-size"}
               id={"size"}
-              value={monsterSize}
+              value={size}
               onChange={(event) => {
-                dispatchFilters({
-                  type: "setMonsterSize",
-                  payload: event.target.value,
-                });
+                setQueryParam("size", event);
               }}
             >
               {MonsterSize.map((size) => (
@@ -146,12 +152,9 @@ export default function Home({ monstersData }: MonstersProps) {
               label={"Monster type"}
               name={"monster-type"}
               id={"type"}
-              value={monsterType}
+              value={type}
               onChange={(event) => {
-                dispatchFilters({
-                  type: "setMonsterType",
-                  payload: event.target.value,
-                });
+                setQueryParam("type", event);
               }}
             >
               {MonsterType.map((type) => (
@@ -165,12 +168,9 @@ export default function Home({ monstersData }: MonstersProps) {
               label={"Monster AC value"}
               name={"monster-ac"}
               id={"ac"}
-              value={monsterAC}
+              value={ac}
               onChange={(event) => {
-                dispatchFilters({
-                  type: "setMonsterAC",
-                  payload: event.target.value,
-                });
+                setQueryParam("ac", event);
               }}
             >
               {MonsterAC.map((ac) => (
@@ -184,31 +184,26 @@ export default function Home({ monstersData }: MonstersProps) {
             <div className="totals">
               {resultsTotal} results. {numberOfPages} pages
             </div>
-            {monsterSize !== "ALL" && (
+
+            {size !== "ALL" && (
               <SelectedFilter
                 label={"Monster size"}
-                selected_value={monsterSize}
-                onClick={() => {
-                  dispatchFilters({ type: "clearMonsterSize" });
-                }}
+                selected_value={size}
+                onClick={() => clearParam("size")}
               />
             )}
-            {monsterType !== "ALL" && (
+            {type !== "ALL" && (
               <SelectedFilter
                 label={"Monster type"}
-                selected_value={monsterType}
-                onClick={() => {
-                  dispatchFilters({ type: "clearMonsterType" });
-                }}
+                selected_value={type}
+                onClick={() => clearParam("type")}
               />
             )}
-            {monsterAC !== "ALL" && (
+            {ac !== "ALL" && (
               <SelectedFilter
                 label={"AC value"}
-                selected_value={monsterAC}
-                onClick={() => {
-                  dispatchFilters({ type: "clearMonsterAC" });
-                }}
+                selected_value={ac}
+                onClick={() => clearParam("ac")}
               />
             )}
           </div>
