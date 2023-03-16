@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { ChangeEvent, useEffect } from "react";
 import Head from "next/head";
 import client from "../apollo-graphql/apollo-client";
 import { Card } from "components/card";
@@ -16,8 +16,6 @@ export default function Home({ monstersData }: MonstersProps) {
 
   const [filteredList, setFilteredList] = React.useState(monstersData);
   const [resultsTotal, setResultsTotal] = React.useState();
-
-  console.log("router query", router.query);
 
   const { type = "ALL", size = "ALL", ac = "ALL" } = router.query;
 
@@ -52,28 +50,15 @@ export default function Home({ monstersData }: MonstersProps) {
     return filteredAC;
   };
 
-  const setQueryParam = (param: string, event: { target: { value: any } }) => {
+  const setQueryParam = (
+    param: string,
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const value = event.target.value;
 
-    if (param === "size") {
-      push({ query: { ...query, size: value } }, undefined, {
-        shallow: true,
-      });
-    } else if (param === "type") {
-      push({ query: { ...query, type: value } }, undefined, {
-        shallow: true,
-      });
-    } else if (param === "ac") {
-      push({ query: { ...query, ac: value } }, undefined, {
-        shallow: true,
-      });
-    }
-
-    {
-      /* value === "ALL"
-      ? router.push(`/`, undefined, { shallow: true })
-  : router.push(`?${param}=${value}`, undefined, { shallow: true })*/
-    }
+    push({ query: { ...query, [param]: value } }, undefined, {
+      shallow: true,
+    });
   };
 
   const clearParam = (value: string) => {
@@ -84,6 +69,7 @@ export default function Home({ monstersData }: MonstersProps) {
 
   useEffect(() => {
     let filteredData = filterBySize(monstersData);
+    console.log(filteredData);
     filteredData = filterByType(filteredData);
     filteredData = filterByAC(filteredData);
     setFilteredList(filteredData);
@@ -107,7 +93,7 @@ export default function Home({ monstersData }: MonstersProps) {
               name={"monster-size"}
               id={"size"}
               value={size}
-              onChange={(event) => {
+              onChange={(event: ChangeEvent<HTMLInputElement>) => {
                 setQueryParam("size", event);
               }}
             >
@@ -123,7 +109,7 @@ export default function Home({ monstersData }: MonstersProps) {
               name={"monster-type"}
               id={"type"}
               value={type}
-              onChange={(event) => {
+              onChange={(event: ChangeEvent<HTMLInputElement>) => {
                 setQueryParam("type", event);
               }}
             >
@@ -139,7 +125,7 @@ export default function Home({ monstersData }: MonstersProps) {
               name={"monster-ac"}
               id={"ac"}
               value={ac}
-              onChange={(event) => {
+              onChange={(event: ChangeEvent<HTMLInputElement>) => {
                 setQueryParam("ac", event);
               }}
             >
