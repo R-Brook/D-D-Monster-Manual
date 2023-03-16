@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 
 export default function Home({ monstersData }: MonstersProps) {
   const router = useRouter();
+  const { push, query } = useRouter();
 
   const [filteredList, setFilteredList] = React.useState(monstersData);
   const [resultsTotal, setResultsTotal] = React.useState();
@@ -53,9 +54,26 @@ export default function Home({ monstersData }: MonstersProps) {
 
   const setQueryParam = (param: string, event: { target: { value: any } }) => {
     const value = event.target.value;
-    value === "ALL"
+
+    if (param === "size") {
+      push({ query: { ...query, size: value } }, undefined, {
+        shallow: true,
+      });
+    } else if (param === "type") {
+      push({ query: { ...query, type: value } }, undefined, {
+        shallow: true,
+      });
+    } else if (param === "ac") {
+      push({ query: { ...query, ac: value } }, undefined, {
+        shallow: true,
+      });
+    }
+
+    {
+      /* value === "ALL"
       ? router.push(`/`, undefined, { shallow: true })
-      : router.push(`?${param}=${value}`, undefined, { shallow: true });
+  : router.push(`?${param}=${value}`, undefined, { shallow: true })*/
+    }
   };
 
   const clearParam = (value: string) => {
