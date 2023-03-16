@@ -5,7 +5,7 @@ import classNames from "classnames";
 import {
   usePagination,
   usePaginationDispatch,
-} from "contexts/pagination/paginationContext";
+} from "context/pagination/paginationContext";
 
 export interface PaginationProps {
   onChange?: (value: string) => void;

@@ -1,5 +1,5 @@
 import { Header } from "components/header";
-import { PaginationProvider } from "contexts/pagination/paginationContext";
+import { PaginationProvider } from "context/pagination/paginationContext";
 import type { AppProps } from "next/app";
 
 import "../css/styles.css";

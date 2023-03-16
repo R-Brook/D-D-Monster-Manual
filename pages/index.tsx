@@ -9,13 +9,35 @@ import { Select } from "components/select";
 import { MonsterAC, MonsterSize, MonsterType } from "utilities/monster-filters";
 import { SelectedFilter } from "components/selectedFilter";
 import { useRouter } from "next/router";
+import { Pagination } from "components/pagination";
+
+import {
+  usePagination,
+  usePaginationDispatch,
+} from "context/pagination/paginationContext";
 
 export default function Home({ monstersData }: MonstersProps) {
   const router = useRouter();
   const { push, query } = useRouter();
 
   const [filteredList, setFilteredList] = React.useState(monstersData);
-  const [resultsTotal, setResultsTotal] = React.useState();
+
+  // From context
+
+  //const { monsterSize, monsterType, monsterAC } = useSelectedFilters();
+
+  const {
+    numberOfPages,
+    resultsTotal,
+    entriesPerPage,
+    currentPage,
+    shownItems,
+  } = usePagination();
+  const dispatchPagination = usePaginationDispatch();
+
+  /*
+  // @TODO: Refactor to function
+*/
 
   const { type = "ALL", size = "ALL", ac = "ALL" } = router.query;
 
@@ -73,8 +95,38 @@ export default function Home({ monstersData }: MonstersProps) {
     filteredData = filterByType(filteredData);
     filteredData = filterByAC(filteredData);
     setFilteredList(filteredData);
-    setResultsTotal(filteredData.length);
+
+    dispatchPagination({
+      type: "setResultsTotal",
+      payload: filteredData.length,
+    });
   }, [size, type, ac]);
+
+  useEffect(() => {
+    dispatchPagination({
+      type: "setNumberOfPages",
+      payload: Math.ceil(resultsTotal / entriesPerPage),
+    });
+  }, [resultsTotal]);
+
+  let pageArray: any[][] = [filteredList];
+
+  useEffect(() => {
+    // go through filteredList x numberOfPages, and cut into sections of a certain size
+    let foo = 0;
+    pageArray = [];
+    for (let i = 1; i <= numberOfPages; i++) {
+      const barr = filteredList.slice(foo, (foo += entriesPerPage));
+
+      pageArray.push(barr);
+    }
+
+    dispatchPagination({
+      type: "setShownItems",
+      payload: pageArray[currentPage - 1],
+    });
+    console.log(shownItems);
+  }, [numberOfPages, currentPage]);
 
   return (
     <>
@@ -85,6 +137,7 @@ export default function Home({ monstersData }: MonstersProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="container">
+        <Pagination entries_per_page={entriesPerPage} />
         <div className="cards-container">
           <div className="filter-container">
             <Select
@@ -137,7 +190,9 @@ export default function Home({ monstersData }: MonstersProps) {
             </Select>
           </div>
           <div className="selected-filter-container">
-            <div className="totals">{resultsTotal} results</div>
+            <div className="totals">
+              {resultsTotal} results. {numberOfPages} pages
+            </div>
             {size !== "ALL" && (
               <SelectedFilter
                 label={"Monster size"}
@@ -161,7 +216,7 @@ export default function Home({ monstersData }: MonstersProps) {
             )}
           </div>
 
-          {filteredList.map((monster) => (
+          {shownItems.map((monster) => (
             <div className="card-container">
               <Card
                 key={monster.index}
