@@ -1,6 +1,8 @@
 .container {
   display: flex;
   justify-content: center;
+  margin-top: 1rem;
+  margin-bottom: 3rem;
 }
 .button {
   border: none;
@@ -14,6 +16,32 @@
   cursor: pointer;
 }
 
+.disabled {
+  background-color: var(--white);
+  border: 1px solid;
+  border-color: var(--grey);
+  color: var(--grey);
+  margin: 0.5rem;
+  fill: var(--grey);
+  cursor: auto;
+}
+
+.button.disabled:hover {
+  background: none;
+}
+
+.enabled {
+  background-color: var(--black);
+  border: 1px solid;
+  border-color: var(--black);
+  margin: 0.5rem;
+  fill: var(--white);
+}
+
+.enabled:hover {
+  fill: var(--black);
+}
+
 .selected {
   background-color: var(--grey);
 }
@@ -24,16 +52,4 @@
 
 .button:hover {
   background-color: var(--grey-light);
-}
-
-.chevron {
-  background-color: var(--black);
-  border: 1px solid;
-  border-color: var(--black);
-  margin: 0.5rem;
-  fill: var(--white);
-}
-.chevron:hover {
-  background-color: var(--white);
-  fill: var(--black);
 }

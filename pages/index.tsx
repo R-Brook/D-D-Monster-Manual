@@ -127,7 +127,6 @@ export default function Home({ monstersData }: MonstersProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="container">
-        <Pagination entries_per_page={entriesPerPage} />
         <div className="cards-container">
           <div className="filter-container">
             <Select
@@ -227,6 +226,8 @@ export default function Home({ monstersData }: MonstersProps) {
             </div>
           ))}
         </div>
+
+        <Pagination entries_per_page={entriesPerPage} />
       </main>
     </>
   );
