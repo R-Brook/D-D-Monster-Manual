@@ -29,16 +29,25 @@ export const Pagination: FC<PaginationProps> = ({
     });
   }, [resultsTotal]);
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  };
+
   return (
     <div className={styles.container}>
       <button
-        className={classNames(styles.button, styles.chevron)}
+        className={classNames(
+          styles.button,
+          currentPage === 1 ? styles.disabled : styles.enabled
+        )}
         aria-label="Pagination decrease"
+        disabled={currentPage === 1}
         onClick={() => {
           dispatchPagination({
             type: "setCurrentPage",
             payload: currentPage > 1 ? currentPage - 1 : currentPage,
           });
+          scrollToTop();
         }}
       >
         <svg
@@ -78,20 +87,26 @@ export const Pagination: FC<PaginationProps> = ({
               type: "setCurrentPage",
               payload: pageNumber + 1,
             });
+            scrollToTop();
           }}
         >
           {pageNumber + 1}
         </button>
       ))}
       <button
-        className={classNames(styles.button, styles.chevron)}
+        className={classNames(
+          styles.button,
+          currentPage === numberOfPages ? styles.disabled : styles.enabled
+        )}
         aria-label="Pagination increase"
+        disabled={currentPage === numberOfPages}
         onClick={() => {
           dispatchPagination({
             type: "setCurrentPage",
             payload:
               currentPage < numberOfPages ? currentPage + 1 : currentPage,
           });
+          scrollToTop();
         }}
       >
         <svg
