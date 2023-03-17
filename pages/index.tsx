@@ -22,10 +22,6 @@ export default function Home({ monstersData }: MonstersProps) {
 
   const [filteredList, setFilteredList] = React.useState(monstersData);
 
-  // From context
-
-  //const { monsterSize, monsterType, monsterAC } = useSelectedFilters();
-
   const {
     numberOfPages,
     resultsTotal,
@@ -34,12 +30,11 @@ export default function Home({ monstersData }: MonstersProps) {
     shownItems,
   } = usePagination();
   const dispatchPagination = usePaginationDispatch();
+  const { type = "ALL", size = "ALL", ac = "ALL" } = router.query;
 
   /*
-  // @TODO: Refactor to function
+  // @TODO: Refactor filterBySize, filterByType, filterByAC to one function
 */
-
-  const { type = "ALL", size = "ALL", ac = "ALL" } = router.query;
 
   const filterBySize = (filteredData: any) => {
     if (size === "ALL" || undefined) {
@@ -91,7 +86,6 @@ export default function Home({ monstersData }: MonstersProps) {
 
   useEffect(() => {
     let filteredData = filterBySize(monstersData);
-    console.log(filteredData);
     filteredData = filterByType(filteredData);
     filteredData = filterByAC(filteredData);
     setFilteredList(filteredData);
@@ -100,33 +94,29 @@ export default function Home({ monstersData }: MonstersProps) {
       type: "setResultsTotal",
       payload: filteredData.length,
     });
-  }, [size, type, ac]);
-
-  useEffect(() => {
     dispatchPagination({
       type: "setNumberOfPages",
       payload: Math.ceil(resultsTotal / entriesPerPage),
     });
-  }, [resultsTotal]);
 
-  let pageArray: any[][] = [filteredList];
-
-  useEffect(() => {
     // go through filteredList x numberOfPages, and cut into sections of a certain size
-    let foo = 0;
+    let startPoint = 0;
     pageArray = [];
     for (let i = 1; i <= numberOfPages; i++) {
-      const barr = filteredList.slice(foo, (foo += entriesPerPage));
-
-      pageArray.push(barr);
+      const section = filteredList.slice(
+        startPoint,
+        (startPoint += entriesPerPage)
+      );
+      pageArray.push(section);
     }
 
     dispatchPagination({
       type: "setShownItems",
       payload: pageArray[currentPage - 1],
     });
-    console.log(shownItems);
-  }, [numberOfPages, currentPage]);
+  }, [size, type, ac, resultsTotal, numberOfPages, currentPage]);
+
+  let pageArray: any[][] = [filteredList];
 
   return (
     <>
