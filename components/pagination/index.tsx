@@ -33,6 +33,7 @@ export const Pagination: FC<PaginationProps> = ({
     <div className={styles.container}>
       <button
         className={classNames(styles.button, styles.chevron)}
+        aria-label="Pagination decrease"
         onClick={() => {
           dispatchPagination({
             type: "setCurrentPage",
@@ -84,6 +85,7 @@ export const Pagination: FC<PaginationProps> = ({
       ))}
       <button
         className={classNames(styles.button, styles.chevron)}
+        aria-label="Pagination increase"
         onClick={() => {
           dispatchPagination({
             type: "setCurrentPage",
