@@ -1,0 +1,32 @@
+.layout {
+  background-color: var(--black);
+  color: var(--white);
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.items {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  list-style-type: none;
+}
+
+.item {
+  display: block;
+  margin: 0.5rem 0;
+}
+
+.link {
+  color: var(--white);
+  text-decoration: underline;
+}
+
+@media screen and (min-width: 600px) {
+  .items {
+    flex-direction: row;
+  }
+}
+
+@media screen and (min-width: 800px) {
+}

@@ -1,3 +1,4 @@
+import { Footer } from "components/footer";
 import { Header } from "components/header";
 import { PaginationProvider } from "context/pagination/paginationContext";
 import type { AppProps } from "next/app";
@@ -10,6 +11,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <PaginationProvider>
         <Header />
         <Component {...pageProps} />
+        <Footer />
       </PaginationProvider>
     </>
   );
