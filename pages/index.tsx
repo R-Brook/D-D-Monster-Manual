@@ -205,29 +205,35 @@ export default function Home({ monstersData }: MonstersProps) {
             )}
           </div>
 
-          {shownItems.map((monster) => (
-            <div className="card-container">
-              <Card
-                key={monster.index}
-                name={monster.name}
-                index={monster.index}
-                image={
-                  monster.image && monster.image.length > 0
-                    ? `https://www.dnd5eapi.co${monster.image}`
-                    : hasImageInPublicFolder.includes(monster.index)
-                    ? `/images/monsters/${monster.index}.jpg`
-                    : null
-                }
-                type={monster.type}
-                size={monster.size}
-                hit_points={monster.hit_points}
-                armor_class_value={monster.armor_class[0].value}
-              />
-            </div>
-          ))}
+          {shownItems ? (
+            shownItems.map((monster) => (
+              <div className="card-container">
+                <Card
+                  key={monster.index}
+                  name={monster.name}
+                  index={monster.index}
+                  image={
+                    monster.image && monster.image.length > 0
+                      ? `https://www.dnd5eapi.co${monster.image}`
+                      : hasImageInPublicFolder.includes(monster.index)
+                      ? `/images/monsters/${monster.index}.jpg`
+                      : null
+                  }
+                  type={monster.type}
+                  size={monster.size}
+                  hit_points={monster.hit_points}
+                  armor_class_value={monster.armor_class[0].value}
+                />
+              </div>
+            ))
+          ) : (
+            <span className="no-results">
+              No results match filter selection
+            </span>
+          )}
         </div>
 
-        <Pagination entries_per_page={entriesPerPage} />
+        {shownItems && <Pagination entries_per_page={entriesPerPage} />}
       </main>
     </>
   );
