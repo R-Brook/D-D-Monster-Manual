@@ -68,6 +68,10 @@ h6 {
   flex-basis: 100%;
 }
 
+.no-results {
+  margin: 4rem 0 5rem 0;
+}
+
 @media screen and (min-width: 40rem) {
   .card-container {
     width: 45%;
