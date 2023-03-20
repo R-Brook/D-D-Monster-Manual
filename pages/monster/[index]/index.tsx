@@ -7,6 +7,7 @@ import { MONSTER_QUERY } from "apollo-graphql/queries/monster";
 import { MONSTER_INDEX_QUERY } from "apollo-graphql/queries/monsterByIndex";
 
 export default function MonsterPage({ monsterData }: MonsterProps) {
+  console.log(monsterData);
   return (
     <>
       <Head>
@@ -89,6 +90,18 @@ export default function MonsterPage({ monsterData }: MonsterProps) {
                 <li>Truesight: {monsterData.senses.truesight}</li>
               )}
             </ul>
+          </li>
+          <li>
+            Damage resistances:{" "}
+            {monsterData.damage_resistances.length > 0
+              ? monsterData.damage_resistances
+              : `None`}
+          </li>
+          <li>
+            Damage vulnerabilities:{" "}
+            {monsterData.damage_vulnerabilities.length > 0
+              ? monsterData.damage_vulnerabilities
+              : `None`}
           </li>
         </ul>
       </main>

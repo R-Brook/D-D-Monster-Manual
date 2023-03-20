@@ -23,6 +23,8 @@ export interface monsterData {
   speed: Speed;
   languages: string;
   senses: Senses;
+  damage_resistances: string[];
+  damage_vulnerabilities: string[];
 }
 
 export interface ArmorProps {

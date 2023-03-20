@@ -38,6 +38,14 @@ export const MONSTER_QUERY = gql`
         tremorsense
         truesight
       }
+      damage_resistances
+      damage_vulnerabilities
+      proficiencies {
+        value
+        proficiency {
+          name
+        }
+      }
     }
   }
 `;
