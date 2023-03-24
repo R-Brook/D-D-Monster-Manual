@@ -1,0 +1,16 @@
+.copy {
+  font-size: 1.25rem;
+}
+
+.attributeContainer {
+  border: 1px solid var(--black);
+  display: flex;
+  align-items: center;
+  margin-right: 6px;
+  padding: 0.25rem;
+}
+
+.iconSpan {
+  display: flex;
+  margin: 0 2px;
+}
