@@ -33,16 +33,6 @@
   margin-top: 10px;
 }
 
-.hp {
-  font-size: 1.25rem;
-}
-
-.hpContainer {
-  border: 1px solid var(--black);
-  display: inline-block;
-  padding: 0.25rem;
-}
-
 .image {
   object-fit: contain;
   height: 100%;
@@ -64,4 +54,7 @@
   border: 1px solid var(--black);
   background-color: var(--white);
   color: var(--black);
+}
+.attributeWrapper {
+  display: flex;
 }
