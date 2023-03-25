@@ -43,6 +43,7 @@ h6 {
 
 .container {
   max-width: 1100px;
+  margin-bottom: 42px;
   margin-left: 2rem;
   margin-right: 2rem;
 }
@@ -78,6 +79,7 @@ h6 {
   }
   .container {
     margin: auto;
+    margin-bottom: 64px;
   }
   .totals {
     flex-basis: auto;
@@ -90,5 +92,6 @@ h6 {
   }
   .container {
     margin: auto;
+    margin-bottom: 84px;
   }
 }

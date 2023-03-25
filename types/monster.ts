@@ -25,6 +25,8 @@ export interface monsterData {
   senses: Senses;
   damage_resistances: string[];
   damage_vulnerabilities: string[];
+  damage_immunities: string[];
+  proficiencies: ProficienciesProps;
 }
 
 export interface ArmorProps {
@@ -34,6 +36,15 @@ export interface ArmorProps {
 export interface ArmorInnerProps {
   value: number;
   type: string;
+}
+
+export interface ProficienciesProps {
+  value: number;
+  proficiency: ProficienyProps;
+}
+
+export interface ProficienyProps {
+  name: string;
 }
 
 export interface Speed {

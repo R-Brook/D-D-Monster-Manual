@@ -7,7 +7,8 @@ import { MONSTER_QUERY } from "apollo-graphql/queries/monster";
 import { MONSTER_INDEX_QUERY } from "apollo-graphql/queries/monsterByIndex";
 
 export default function MonsterPage({ monsterData }: MonsterProps) {
-  console.log(monsterData);
+  const proficiencies = Object.entries(monsterData.proficiencies);
+
   return (
     <>
       <Head>
@@ -102,6 +103,24 @@ export default function MonsterPage({ monsterData }: MonsterProps) {
             {monsterData.damage_vulnerabilities.length > 0
               ? monsterData.damage_vulnerabilities
               : `None`}
+          </li>
+          <li>
+            Damage immunities:{" "}
+            {monsterData.damage_immunities.length > 0
+              ? monsterData.damage_immunities
+              : `None`}
+          </li>
+          <li>
+            Proficiences:
+            <ul>
+              {proficiencies.map((proficiency) => {
+                return (
+                  <li>
+                    {proficiency[1].proficiency.name}: {proficiency[1].value}
+                  </li>
+                );
+              })}
+            </ul>
           </li>
         </ul>
       </main>

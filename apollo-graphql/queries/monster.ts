@@ -40,6 +40,7 @@ export const MONSTER_QUERY = gql`
       }
       damage_resistances
       damage_vulnerabilities
+      damage_immunities
       proficiencies {
         value
         proficiency {
