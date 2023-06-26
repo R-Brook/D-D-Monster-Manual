@@ -153,10 +153,6 @@ export default function MonsterPage({ monsterData }: MonsterProps) {
                             ))}
                           </ul>
                         )}
-                        {ability[1].damage && (
-                          <li>Damage: {ability[1].damage}</li>
-                        )}
-
                         {ability[1].usage && (
                           <li>
                             Usage:
