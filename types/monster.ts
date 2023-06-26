@@ -23,6 +23,11 @@ export interface monsterData {
   speed: Speed;
   languages: string;
   senses: Senses;
+  damage_resistances: string[];
+  damage_vulnerabilities: string[];
+  damage_immunities: string[];
+  proficiencies: ProficienciesProps;
+  special_abilities: SpecialAbilitiesProps;
 }
 
 export interface ArmorProps {
@@ -32,6 +37,15 @@ export interface ArmorProps {
 export interface ArmorInnerProps {
   value: number;
   type: string;
+}
+
+export interface ProficienciesProps {
+  value: number;
+  proficiency: ProficienyProps;
+}
+
+export interface ProficienyProps {
+  name: string;
 }
 
 export interface Speed {
@@ -48,4 +62,27 @@ export interface Senses {
   passive_perception: string;
   tremorsense: string;
   truesight: string;
+}
+
+export interface SpecialAbilitiesProps {
+  name: string;
+  desc: string;
+  attack_bonus: number;
+  dc: DCProps;
+
+  usage: UsageProps;
+}
+
+export interface UsageProps {
+  type: string;
+  times: number;
+  rest_types: string[];
+}
+
+export interface DCProps {
+  type: DCTypeProps;
+}
+
+export interface DCTypeProps {
+  name: string;
 }

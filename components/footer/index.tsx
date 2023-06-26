@@ -5,7 +5,7 @@ import Link from "next/link";
 export const Footer = ({}) => {
   return (
     <div className={styles.layout}>
-      <div className="container">
+      <div className={styles.container}>
         <ul className={styles.items}>
           <li className={styles.item}>
             <a

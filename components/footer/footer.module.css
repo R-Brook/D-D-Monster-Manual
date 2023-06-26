@@ -5,6 +5,13 @@
   padding-bottom: 2rem;
 }
 
+.container {
+  max-width: 1100px;
+  margin-bottom: 42px;
+  margin-left: 2rem;
+  margin-right: 2rem;
+}
+
 .items {
   display: flex;
   flex-direction: column;

@@ -38,6 +38,60 @@ export const MONSTER_QUERY = gql`
         tremorsense
         truesight
       }
+      damage_resistances
+      damage_vulnerabilities
+      damage_immunities
+      proficiencies {
+        value
+        proficiency {
+          name
+        }
+      }
+      special_abilities {
+        name
+        desc
+        dc {
+          type {
+            name
+          }
+        }
+        damage {
+          damage_dice
+          damage_type {
+            name
+          }
+        }
+        usage {
+          type
+          times
+          rest_types
+        }
+
+        spellcasting {
+          level
+          ability {
+            name
+          }
+          dc
+          modifier
+          components_required
+          school
+          slots {
+            level
+          }
+          spells {
+            spell {
+              area_of_effect {
+                size
+                type
+              }
+              name
+              level
+              range
+            }
+          }
+        }
+      }
     }
   }
 `;

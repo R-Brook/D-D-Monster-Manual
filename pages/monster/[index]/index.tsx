@@ -7,6 +7,14 @@ import { MONSTER_QUERY } from "apollo-graphql/queries/monster";
 import { MONSTER_INDEX_QUERY } from "apollo-graphql/queries/monsterByIndex";
 
 export default function MonsterPage({ monsterData }: MonsterProps) {
+  const proficiencies = monsterData.proficiencies
+    ? Object.entries(monsterData.proficiencies)
+    : [];
+
+  const specialAbilities = monsterData.special_abilities
+    ? Object.entries(monsterData.special_abilities)
+    : [];
+
   return (
     <>
       <Head>
@@ -89,6 +97,87 @@ export default function MonsterPage({ monsterData }: MonsterProps) {
                 <li>Truesight: {monsterData.senses.truesight}</li>
               )}
             </ul>
+          </li>
+          <li>
+            Damage resistances:{" "}
+            {monsterData.damage_resistances.length > 0
+              ? monsterData.damage_resistances
+              : `None`}
+          </li>
+          <li>
+            Damage vulnerabilities:{" "}
+            {monsterData.damage_vulnerabilities.length > 0
+              ? monsterData.damage_vulnerabilities
+              : `None`}
+          </li>
+          <li>
+            Damage immunities:{" "}
+            {monsterData.damage_immunities.length > 0
+              ? monsterData.damage_immunities
+              : `None`}
+          </li>
+          <li>
+            Proficiences:{" "}
+            {proficiencies.length > 0 ? (
+              <ul>
+                {proficiencies.map((proficiency) => {
+                  return (
+                    <li>
+                      {proficiency[1].proficiency.name}: {proficiency[1].value}
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : (
+              "None"
+            )}
+          </li>
+          <li>
+            Special abilities:{" "}
+            {specialAbilities.length > 0 ? (
+              <ul>
+                {specialAbilities.map((ability) => {
+                  const formatDescription = ability[1].desc.split("- ");
+
+                  return (
+                    <>
+                      {ability[1].name}:
+                      <ul>
+                        {formatDescription.length > 0 && (
+                          <li>{formatDescription[0]}</li>
+                        )}
+                        {formatDescription.length > 1 && (
+                          <ul>
+                            {formatDescription.slice(1).map((item: string) => (
+                              <li>{item}</li>
+                            ))}
+                          </ul>
+                        )}
+                        {ability[1].usage && (
+                          <li>
+                            Usage:
+                            <ul>
+                              <li>Times: {ability[1].usage.times}</li>
+                              <li>Type: {ability[1].usage.type}</li>
+                              {ability[1].usage.rest_types && (
+                                <li>
+                                  Rest types: {ability[1].usage.rest_types}
+                                </li>
+                              )}
+                            </ul>
+                          </li>
+                        )}
+                        {ability[1].dc && (
+                          <li>DC type: {ability[1].dc.type.name}</li>
+                        )}
+                      </ul>
+                    </>
+                  );
+                })}
+              </ul>
+            ) : (
+              "None"
+            )}
           </li>
         </ul>
       </main>
