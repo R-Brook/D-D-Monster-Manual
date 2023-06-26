@@ -27,6 +27,7 @@ export interface monsterData {
   damage_vulnerabilities: string[];
   damage_immunities: string[];
   proficiencies: ProficienciesProps;
+  special_abilities: SpecialAbilitiesProps;
 }
 
 export interface ArmorProps {
@@ -61,4 +62,50 @@ export interface Senses {
   passive_perception: string;
   tremorsense: string;
   truesight: string;
+}
+
+export interface SpecialAbilitiesProps {
+  name: string;
+  desc: string;
+  attack_bonus: number;
+  damage: DamageProps;
+  dc: DCProps;
+  //spellcasting: SpellcastingPropsGroup;
+  usage: UsageProps;
+}
+
+export interface UsageProps {
+  type: string;
+  times: number;
+  rest_types: string[];
+}
+
+export interface DamageProps {
+  damage_dice: string;
+  damage_type: DamageTypeProps;
+}
+
+export interface DamageTypeProps {
+  name: string;
+}
+
+/*
+export interface SpellcastingPropsGroup {
+  ability: SpellcastingProps;
+  school: string;
+  dc: number;
+  components_required: [string];
+}
+
+export interface SpellcastingProps {
+  name: string;
+}
+*/
+
+export interface DCProps {
+  type: DCTypeProps;
+}
+
+export interface DCTypeProps {
+  name: string;
 }
