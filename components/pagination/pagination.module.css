@@ -6,6 +6,7 @@
 }
 .button {
   border: none;
+  color: var(--black);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -14,6 +15,15 @@
   width: 2rem;
   height: 2rem;
   cursor: pointer;
+}
+
+.arrow {
+  height: 12px;
+  width: 12px;
+}
+
+.backArrow {
+  transform: rotate(180deg);
 }
 
 .disabled {
