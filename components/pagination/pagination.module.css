@@ -6,6 +6,7 @@
 }
 .button {
   border: none;
+  color: var(--black);
   display: flex;
   justify-content: center;
   align-items: center;
