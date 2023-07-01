@@ -17,6 +17,15 @@
   cursor: pointer;
 }
 
+.arrow {
+  height: 12px;
+  width: 12px;
+}
+
+.backArrow {
+  transform: rotate(180deg);
+}
+
 .disabled {
   background-color: var(--white);
   border: 1px solid;

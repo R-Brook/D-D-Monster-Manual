@@ -51,10 +51,8 @@ export const Pagination: FC<PaginationProps> = ({
         }}
       >
         <svg
-          height="12px"
-          width="12px"
+          className={classNames(styles.arrow, styles.backArrow)}
           viewBox="0 0 185.343 185.343"
-          transform="rotate(0)matrix(-1, 0, 0, 1, 0, 0)"
         >
           <g id="SVGRepo_bgCarrier" strokeWidth="2"></g>
           <g
@@ -110,11 +108,9 @@ export const Pagination: FC<PaginationProps> = ({
         }}
       >
         <svg
-          height="12px"
-          width="12px"
+          className={styles.arrow}
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 185.343 185.343"
-          transform="rotate(0)"
         >
           <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
           <g
