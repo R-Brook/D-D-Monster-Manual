@@ -8,7 +8,7 @@ export interface SelectProps {
   onChange?: (event: any) => void;
   onBlur?: (event: any) => void;
   id: string;
-  children: any;
+  options: (string | number)[];
   value: any;
 }
 
@@ -17,7 +17,7 @@ export const Select: FC<SelectProps> = ({
   label,
   name,
   id,
-  children,
+  options,
   value,
   onBlur = () => null,
   onChange = () => null,
@@ -33,7 +33,11 @@ export const Select: FC<SelectProps> = ({
         onBlur={onBlur}
         className={styles.select}
       >
-        {children}
+        {options.map((option) => (
+          <option value={option} key={option}>
+            {option}
+          </option>
+        ))}
       </select>
     </div>
   );

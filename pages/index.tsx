@@ -135,48 +135,35 @@ export default function Home({ monstersData }: MonstersProps) {
               name={"monster-size"}
               id={"size"}
               value={size}
+              options={MonsterSize}
               onChange={(event: ChangeEvent<HTMLInputElement>) => {
                 setQueryParam("size", event);
               }}
-            >
-              {MonsterSize.map((size) => (
-                <option value={size} key={size}>
-                  {size}
-                </option>
-              ))}
-            </Select>
+            />
+
             <Select
               required={false}
               label={"Monster type"}
               name={"monster-type"}
               id={"type"}
               value={type}
+              options={MonsterType}
               onChange={(event: ChangeEvent<HTMLInputElement>) => {
                 setQueryParam("type", event);
               }}
-            >
-              {MonsterType.map((type) => (
-                <option value={type} key={type}>
-                  {type}
-                </option>
-              ))}
-            </Select>
+            />
+
             <Select
               required={false}
               label={"Monster AC value"}
               name={"monster-ac"}
               id={"ac"}
               value={ac}
+              options={MonsterAC}
               onChange={(event: ChangeEvent<HTMLInputElement>) => {
                 setQueryParam("ac", event);
               }}
-            >
-              {MonsterAC.map((ac) => (
-                <option value={ac} key={ac}>
-                  {ac}
-                </option>
-              ))}
-            </Select>
+            />
           </div>
           <div className="selected-filter-container">
             <div className="totals">
