@@ -1,5 +1,5 @@
-import { Footer } from "components/Footer-foo";
-import { Header } from "components/Header-foo";
+import { Footer } from "components/Footer";
+import { Header } from "components/Header";
 import { PaginationProvider } from "context/pagination/paginationContext";
 import type { AppProps } from "next/app";
 
