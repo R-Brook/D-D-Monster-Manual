@@ -1,7 +1,7 @@
 import React, { FC } from "react";
-import styles from "./card.module.css";
+import styles from "./Card.module.css";
 import Link from "next/link";
-import { Attribute } from "components/attribute";
+import { Attribute } from "components/Attribute";
 
 export interface CardProps {
   name: string;

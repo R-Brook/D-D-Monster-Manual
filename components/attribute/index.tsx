@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import styles from "./attribute.module.css";
+import styles from "./Attribute.module.css";
 
 export interface AttributeProps {
   icon: any; //update

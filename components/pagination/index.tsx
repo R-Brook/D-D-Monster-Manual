@@ -1,5 +1,5 @@
 import React, { FC, useEffect } from "react";
-import styles from "./pagination.module.css";
+import styles from "./Pagination.module.css";
 import classNames from "classnames";
 
 import {

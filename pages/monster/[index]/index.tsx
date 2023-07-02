@@ -122,7 +122,7 @@ export default function MonsterPage({ monsterData }: MonsterProps) {
               <ul>
                 {proficiencies.map((proficiency) => {
                   return (
-                    <li>
+                    <li key={proficiency[1].proficiency.name}>
                       {proficiency[1].proficiency.name}: {proficiency[1].value}
                     </li>
                   );
@@ -149,7 +149,7 @@ export default function MonsterPage({ monsterData }: MonsterProps) {
                         {formatDescription.length > 1 && (
                           <ul>
                             {formatDescription.slice(1).map((item: string) => (
-                              <li>{item}</li>
+                              <li key={item}>{item}</li>
                             ))}
                           </ul>
                         )}

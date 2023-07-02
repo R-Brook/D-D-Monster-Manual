@@ -1,15 +1,15 @@
 import React, { ChangeEvent, useEffect } from "react";
 import Head from "next/head";
 import client from "../apollo-graphql/apollo-client";
-import { Card } from "components/card";
+import { Card } from "components/Card";
 import { MONSTERS_QUERY } from "apollo-graphql/queries/monsters";
 import { MonstersProps } from "types/monsters";
 import { hasImageInPublicFolder } from "utilities/images";
-import { Select } from "components/select";
+import { Select } from "components/Select";
 import { MonsterAC, MonsterSize, MonsterType } from "utilities/monster-filters";
-import { SelectedFilter } from "components/selectedFilter";
+import { SelectedFilter } from "components/SelectedFilter";
 import { useRouter } from "next/router";
-import { Pagination } from "components/pagination";
+import { Pagination } from "components/Pagination";
 
 import {
   usePagination,
@@ -207,9 +207,8 @@ export default function Home({ monstersData }: MonstersProps) {
 
           {shownItems ? (
             shownItems.map((monster) => (
-              <div className="card-container">
+              <div className="card-container" key={monster.index}>
                 <Card
-                  key={monster.index}
                   name={monster.name}
                   index={monster.index}
                   image={

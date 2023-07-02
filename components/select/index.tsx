@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import styles from "./select.module.css";
+import styles from "./Select.module.css";
 
 export interface SelectProps {
   required: boolean;
