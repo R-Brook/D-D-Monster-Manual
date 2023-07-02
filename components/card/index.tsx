@@ -40,10 +40,7 @@ export const Card: FC<CardProps> = ({
         <Attribute
           icon={
             <svg
-              className={styles.hpIcon}
               role="img"
-              width="18px"
-              height="18px"
               viewBox="0 0 1280.000000 1189.000000"
               preserveAspectRatio="xMidYMid meet"
             >
@@ -72,9 +69,7 @@ export const Card: FC<CardProps> = ({
         <Attribute
           icon={
             <svg
-              className={styles.acIcon}
-              width="18px"
-              height="18px"
+              role="img"
               viewBox="0 0 1165.000000 1280.000000"
               preserveAspectRatio="xMidYMid meet"
             >
