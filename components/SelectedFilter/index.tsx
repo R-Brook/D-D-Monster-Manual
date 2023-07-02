@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import styles from "./selectedFilter.module.css";
+import styles from "./SelectedFilter.module.css";
 
 export interface SelectedFilterProps {
   label: string;
