@@ -5,9 +5,15 @@ const meta: Meta<typeof CardComponent> = {
   title: "Card",
   component: CardComponent,
   parameters: {
-    // More on how to position stories at: https://storybook.js.org/docs/react/configure/story-layout
     layout: "fullscreen",
   },
+  decorators: [
+    (Story) => (
+      <div style={{ maxWidth: "440px" }}>
+        <Story />
+      </div>
+    ),
+  ],
 };
 
 export default meta;
