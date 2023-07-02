@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import styles from "./Card.module.css";
 import Link from "next/link";
-import { Attribute } from "components/Attribute";
+import { Attribute } from "components/Attribute-foo";
 
 export interface CardProps {
   name: string;

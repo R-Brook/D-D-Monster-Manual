@@ -1,15 +1,15 @@
 import React, { ChangeEvent, useEffect } from "react";
 import Head from "next/head";
 import client from "../apollo-graphql/apollo-client";
-import { Card } from "components/Card";
+import { Card } from "components/Card-foo";
 import { MONSTERS_QUERY } from "apollo-graphql/queries/monsters";
 import { MonstersProps } from "types/monsters";
 import { hasImageInPublicFolder } from "utilities/images";
-import { Select } from "components/Select";
+import { Select } from "components/Select-foo";
 import { MonsterAC, MonsterSize, MonsterType } from "utilities/monster-filters";
-import { SelectedFilter } from "components/SelectedFilter";
+import { SelectedFilter } from "components/SelectedFilter-foo";
 import { useRouter } from "next/router";
-import { Pagination } from "components/Pagination";
+import { Pagination } from "components/Pagination-foo";
 
 import {
   usePagination,
