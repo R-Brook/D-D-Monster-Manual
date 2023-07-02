@@ -5,6 +5,12 @@
   padding: 0.5rem 1rem;
 }
 
+.icon {
+  height: 12px;
+  stroke: var(--black);
+  width: 12px;
+}
+
 .remove {
   background: none;
   display: flex;
