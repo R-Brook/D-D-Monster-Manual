@@ -33,38 +33,29 @@ export default function Home({ monstersData }: MonstersProps) {
   const { type = "ALL", size = "ALL", ac = "ALL" } = router.query;
 
   /*
-  // @TODO: Refactor filterBySize, filterByType, filterByAC to one function
+  // @TODO: Refactor ffunction
 */
 
-  const filterBySize = (filteredData: any) => {
-    if (size === "ALL" || undefined) {
+  const filterAttribute = (filteredData: any, foo: string | string[]) => {
+    if (foo === "ALL" || undefined) {
       return filteredData;
+    } else if (foo === size) {
+      const filtered = filteredData.filter(
+        (monster: { size: string }) => monster.size === foo
+      );
+      return filtered;
+    } else if (foo === type) {
+      const filtered = filteredData.filter(
+        (monster: { type: string }) => monster.type === foo
+      );
+      return filtered;
+    } else if (foo === ac) {
+      const filtered = filteredData.filter(
+        (monster: { armor_class: { value: string }[] }) =>
+          monster.armor_class[0].value.toString() === foo
+      );
+      return filtered;
     }
-    const filteredSize = filteredData.filter(
-      (monster: { size: string }) => monster.size === size
-    );
-    return filteredSize;
-  };
-
-  const filterByType = (filteredData: any) => {
-    if (type === "ALL" || undefined) {
-      return filteredData;
-    }
-    const filteredType = filteredData.filter(
-      (monster: { type: string }) => monster.type === type
-    );
-    return filteredType;
-  };
-
-  const filterByAC = (filteredData: any) => {
-    if (ac === "ALL" || undefined) {
-      return filteredData;
-    }
-    const filteredAC = filteredData.filter(
-      (monster: { armor_class: { value: string }[] }) =>
-        monster.armor_class[0].value.toString() === ac
-    );
-    return filteredAC;
   };
 
   const setQueryParam = (
@@ -85,9 +76,10 @@ export default function Home({ monstersData }: MonstersProps) {
   };
 
   useEffect(() => {
-    let filteredData = filterBySize(monstersData);
-    filteredData = filterByType(filteredData);
-    filteredData = filterByAC(filteredData);
+    let filteredData = filterAttribute(monstersData, size);
+    filteredData = filterAttribute(filteredData, type);
+    filteredData = filterAttribute(filteredData, ac);
+
     setFilteredList(filteredData);
 
     dispatchPagination({
